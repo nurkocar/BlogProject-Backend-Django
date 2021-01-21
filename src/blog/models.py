@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-
+def user_directory_path(instance, filename):
+    return 'blog/{}/{}'.format(instance.author.id, filename)
 class Category(models.Model):
     name = models.CharField(max_length=100)
     
@@ -24,6 +25,7 @@ class Post(models.Model):
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add = True)
     update_date = models.DateTimeField(auto_now = True)
+    image = models.ImageField(upload_to = user_directory_path, default = 'shef.png')
     status = models.CharField(max_length=10, choices=OPTIONS, default='d')
     
     def __str__(self):
