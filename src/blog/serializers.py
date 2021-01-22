@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Category, Recipe, Ingredient
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategoryListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = (
@@ -9,6 +9,8 @@ class CategorySerializer(serializers.ModelSerializer):
             'name',
             'recipe_count'
         )
+    def get_recipe_count(self, obj):
+        return obj.get_recipe_count_display()
         
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,7 +20,7 @@ class IngredientSerializer(serializers.ModelSerializer):
             'name'
         ]
         
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
