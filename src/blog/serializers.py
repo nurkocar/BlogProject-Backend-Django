@@ -9,5 +9,16 @@ class CategorySerializer(serializers.ModelSerializer):
             'name',
             'recipe_count'
         )
+        
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = (
+            'title',
+            'image',
+            'count_like',
+            'count_ingredients',
+            
+        )
 
 
