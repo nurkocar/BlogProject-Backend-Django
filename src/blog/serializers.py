@@ -20,5 +20,20 @@ class RecipeSerializer(serializers.ModelSerializer):
             'count_ingredients',
             
         )
+        
+class RecipeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = (
+            'title',
+            'count_ingredients',
+            'image',
+            'author',
+            'count_comment',
+            'count_recipeview',
+            'count_like',
+            'count_ingredients',
+            'comments'           
+        )
 
 
