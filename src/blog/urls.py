@@ -6,3 +6,4 @@ urlpatterns = [
     path("<category>/recipeList", RecipeList.as_view(), name="recipeList"),
     path("recipe/<title>/", RecipeDetail.as_view(), name="recipeDetail")
 ]
+
