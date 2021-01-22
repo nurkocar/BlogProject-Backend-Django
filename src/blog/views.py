@@ -11,8 +11,24 @@ class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
 
 class RecipeList(generics.ListAPIView):
+    
     serializer_class = RecipeListSerializer
-    queryset = Recipe.objects.all()
+    
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+        category = self.kwargs['category']
+        queryset = queryset.filter(category__name = category)
+        return queryset
+    
+class RecipeDetail(generics.ListAPIView):
+    serializer_class = RecipeDetailSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+        title = self.kwargs['title']
+        queryset = queryset.filter(recipe__title = title)
+        return queryset
 
 
     
