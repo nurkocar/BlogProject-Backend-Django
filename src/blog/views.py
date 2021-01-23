@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import Category, Recipe, Ingredient, Comment, Like, RecipeView
-from .serializers import CategoryListSerializer, RecipeListSerializer, RecipeDetailSerializer
+from .serializers import CategoryListSerializer, RecipeListSerializer, RecipeDetailSerializer, RecipeCreateSerializer, IngredientSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
@@ -20,15 +20,22 @@ class RecipeList(generics.ListAPIView):
         queryset = queryset.filter(category__name = category)
         return queryset
     
-class RecipeDetail(generics.ListAPIView):
+class RecipeDetail(generics.RetrieveAPIView):
     serializer_class = RecipeDetailSerializer
     permission_classes = [IsAuthenticated]
+    lookup_field = 'id'
     
     def get_queryset(self):
         queryset = Recipe.objects.all()
-        title = self.kwargs['title']
-        queryset = queryset.filter(recipe__title = title)
+        id = self.kwargs['id']
+        queryset = queryset.filter(id = id)
         return queryset
+    
+class RecipeCreate(generics.ListCreateAPIView):
+    serializer_class = RecipeCreateSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Recipe.objects.all()
+    
 
 
     

@@ -24,6 +24,8 @@ class RecipeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
+            'id',
+            'slug',
             'title',
             'image',
             'count_like',
@@ -36,10 +38,12 @@ class RecipeListSerializer(serializers.ModelSerializer):
         return obj.get_count_ingredients_display()
         
 class RecipeDetailSerializer(serializers.ModelSerializer):
+    
     ingredient = IngredientSerializer(many=True, read_only=True)
     class Meta:
         model = Recipe
         fields = (
+            'id',
             'title',
             'count_ingredients',
             'image',
@@ -52,4 +56,17 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
             'comments'           
         )
 
+class RecipeCreateSerializer(serializers.ModelSerializer):
+    
+    ingredient = IngredientSerializer(many=True, read_only = True)
+    class Meta:
+        model = Recipe
+        fields = (
+            'title',
+            'ingredient',
+            'method',
+            'image'                  
+        )
+        
+        
 
