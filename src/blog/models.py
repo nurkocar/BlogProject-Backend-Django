@@ -46,7 +46,7 @@ class Recipe(Update):
     @property
     def count_comment(self):
         return self.comment_set.all().count()
-    
+
     @property
     def count_recipeview(self):
         return self.recipeview_set.all().count()
@@ -70,7 +70,7 @@ class Recipe(Update):
 
 class Ingredient(Update):
     name = models.CharField(max_length=50)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredient')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
     time_stamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
