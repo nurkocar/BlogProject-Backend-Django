@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'nested_admin',
     'rest_framework.authtoken',
-    'blog'
+    'blog.apps.BlogConfig'
 ]
 
 MIDDLEWARE = [
