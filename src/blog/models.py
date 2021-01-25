@@ -41,7 +41,7 @@ class Recipe(Update):
     slug = models.SlugField(blank=True)
     
     def __str__(self):
-        return self.title
+        return self.title + ' in ' + self.category.name
     
     @property
     def count_comment(self):
@@ -74,7 +74,7 @@ class Ingredient(Update):
     time_stamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.name
+        return self.name + ' is in ' + self.recipe.title
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete = models.CASCADE)
@@ -82,7 +82,7 @@ class Comment(models.Model):
     content = models.TextField()
     
     def __str__(self):
-        return self.user.username
+        return (self.user.username + ' comments on ' + self.recipe.title)
     
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -90,7 +90,7 @@ class Like(models.Model):
     like_time = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.user.username
+        return (self.user.username + ' likes ' + self.recipe.title)
     
 class RecipeView(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
