@@ -10,8 +10,8 @@ class CategoryListSerializer(serializers.ModelSerializer):
             'name',
             'recipe_count'
         )
-    # def get_recipe_count(self, obj):
-    #     return obj.get_recipe_count_display()
+    # def get_category(self, obj):
+    #     return obj.get_category_display()
         
 class IngredientSerializer(serializers.ModelSerializer):
     recipe = serializers.StringRelatedField()
@@ -25,9 +25,10 @@ class IngredientSerializer(serializers.ModelSerializer):
         )
         
 class CommentSerializer(serializers.ModelSerializer):
+    
     user = serializers.StringRelatedField()
     recipe = serializers.StringRelatedField()
-    
+
     class Meta:
         model = Comment
         fields = (
@@ -35,7 +36,14 @@ class CommentSerializer(serializers.ModelSerializer):
             'user',
             'recipe',
             'comment_time',
-            'content'
+            'content',
+        )
+        
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = (
+            'content',
         )
         
         
@@ -48,38 +56,44 @@ class RecipeListSerializer(serializers.ModelSerializer):
             'title',
             'image',
             'count_like',
-            'count_ingredients',            
+            'count_ingredient',            
         )
         
 class RecipeDetailSerializer(serializers.ModelSerializer):
-    
-    ingredients = IngredientSerializer(many=True, read_only=True)
-    comments = CommentSerializer(many = True, read_only = True)
+    category = CategoryListSerializer()
+    ingredients = IngredientSerializer(many=True)
+    comments = CommentSerializer(many = True)
     class Meta:
         model = Recipe
         fields = (
             'id',
-            'title',
-            'count_ingredients',
-            'image',
+            'category',
             'author',
+            'title',
+            'method',
+            'published_date',
+            'image',
             'count_comment',
             'count_recipeview',
             'count_like',
+            'count_ingredient',
             'ingredients',
             'comments'           
         )
 
-class RecipeCreateSerializer(serializers.ModelSerializer):
+class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
     
     ingredients = IngredientSerializer(many=True)
     class Meta:
         model = Recipe
         fields = (
+            'id',
+            'category',
             'title',
-            'ingredients',
             'method',
-            'image'                  
+            'image',
+            'status',
+            'ingredients'                      
         )
         
         

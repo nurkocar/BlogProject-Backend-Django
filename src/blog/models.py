@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .utils import get_random_code
+from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 def user_directory_path(instance, filename):
@@ -38,7 +41,7 @@ class Recipe(Update):
     published_date = models.DateTimeField(auto_now_add = True)
     image = models.ImageField(upload_to = user_directory_path, default = 'shef.png')
     status = models.CharField(max_length=10, choices=OPTIONS, default='d')
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
     
     def __str__(self):
         return self.title + ' in ' + self.category.name
@@ -56,7 +59,7 @@ class Recipe(Update):
         return self.like_set.all().count()
     
     @property
-    def count_ingredients(self):
+    def count_ingredient(self):
         return self.ingredient_set.all().count()
     
     @property
@@ -98,5 +101,5 @@ class RecipeView(models.Model):
     view_date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.user.username
+        return (self.user.username + ' views ' + self.recipe.title)
     
