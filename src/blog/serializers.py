@@ -15,14 +15,18 @@ class CategoryListSerializer(serializers.ModelSerializer):
         
 class IngredientSerializer(serializers.ModelSerializer):
     recipe = serializers.StringRelatedField()
+    author = serializers.StringRelatedField()
     class Meta:
         model = Ingredient
         fields = (
             'id',
+            'author',
             'name',
             'recipe',
             'time_stamp'
         )
+        
+
         
 class CommentSerializer(serializers.ModelSerializer):
     
@@ -48,11 +52,12 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         
         
 class RecipeListSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
     class Meta:
         model = Recipe
         fields = (
             'id',
-            'slug',
+            'author',
             'title',
             'image',
             'count_like',
@@ -60,9 +65,12 @@ class RecipeListSerializer(serializers.ModelSerializer):
         )
         
 class RecipeDetailSerializer(serializers.ModelSerializer):
+    owner = serializers.SerializerMethodField(read_only = True)
+    status = serializers.ChoiceField(choices=Recipe.OPTIONS)
     category = CategoryListSerializer()
     ingredients = IngredientSerializer(many=True)
     comments = CommentSerializer(many = True)
+    author = serializers.StringRelatedField()
     class Meta:
         model = Recipe
         fields = (
@@ -73,6 +81,8 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
             'method',
             'published_date',
             'image',
+            'status',
+            'owner',
             'count_comment',
             'count_recipeview',
             'count_like',
@@ -80,14 +90,21 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
             'ingredients',
             'comments'           
         )
+        
+    def get_owner(self, obj):
+        request = self.context['request']
+        if request.user.is_authenticated:
+            if obj.author == request.user:
+                return True
+            return False
 
 class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
+    
     
     ingredients = IngredientSerializer(many=True)
     class Meta:
         model = Recipe
         fields = (
-            'id',
             'category',
             'title',
             'method',
@@ -95,6 +112,8 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
             'status',
             'ingredients'                      
         )
+        
+
         
         
 
