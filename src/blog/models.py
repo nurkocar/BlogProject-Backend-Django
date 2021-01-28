@@ -72,7 +72,7 @@ class Recipe(Update):
 
 class Ingredient(Update):
     name = models.CharField(max_length = 50)
-    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    # author = models.ForeignKey(User, on_delete = models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete = models.CASCADE)
     time_stamp = models.DateTimeField(auto_now_add = True)
     
