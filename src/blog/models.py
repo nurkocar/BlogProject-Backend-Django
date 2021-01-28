@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .utils import get_random_code
-from django.template.defaultfilters import slugify
+
 
 
 # Create your models here.
@@ -41,7 +40,7 @@ class Recipe(Update):
     published_date = models.DateTimeField(auto_now_add = True)
     image = models.ImageField(upload_to = user_directory_path, default = 'shef.png')
     status = models.CharField(max_length=10, choices=OPTIONS, default='d')
-    slug = models.SlugField(blank=True, unique=True)
+    slug = models.SlugField(blank=True)
     
     def __str__(self):
         return self.title + ' in ' + self.category.name
@@ -60,7 +59,7 @@ class Recipe(Update):
     
     @property
     def count_ingredient(self):
-        return self.ingredient_set.all().count()
+        return self.ingredient_set.count()
     
     @property
     def ingredients(self):
@@ -72,9 +71,10 @@ class Recipe(Update):
     
 
 class Ingredient(Update):
-    name = models.CharField(max_length=50)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
-    time_stamp = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length = 50)
+    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete = models.CASCADE)
+    time_stamp = models.DateTimeField(auto_now_add = True)
     
     def __str__(self):
         return self.name + ' is in ' + self.recipe.title
