@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.views import APIView
 from .models import Category, Recipe, Ingredient, Comment, Like, RecipeView
@@ -48,7 +49,7 @@ class IngredientCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     
 class IngredientUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated]
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     lookup_field = 'id'
@@ -88,6 +89,24 @@ class RecipeDelete(generics.RetrieveDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeDetailSerializer
     lookup_field = 'id'
+    
+class LikeCreate(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, id):
+        obj = get_object_or_404(Recipe, id = id)
+        like_query_set = Like.objects.filter(user = request.user, recipe = obj)
+        if like_query_set.exists():
+            like_query_set[0].delete()
+        else:
+            Like.objects.create(user = request.user, recipe = obj)
+        
+        data = {
+            'messages': 'like operations succesfull'
+        }
+        
+        return Response(data)
     
 
     

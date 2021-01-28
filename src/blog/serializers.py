@@ -15,12 +15,12 @@ class CategoryListSerializer(serializers.ModelSerializer):
         
 class IngredientSerializer(serializers.ModelSerializer):
     recipe = serializers.StringRelatedField()
-    author = serializers.StringRelatedField()
+    # author = serializers.StringRelatedField()
     class Meta:
         model = Ingredient
         fields = (
             'id',
-            'author',
+            # 'author',
             'name',
             'recipe',
             'time_stamp'
@@ -112,6 +112,7 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
             'status',
             'ingredients'                      
         )
+        
         
 
         
