@@ -4,6 +4,6 @@ from rest_framework import views as rest_views
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name = 'register'),
-    path('profile/<id>', Profile_get_update, name = 'profile'),
-    path('profile/update/', Profile_get_update, name = 'profileUpdate')
+    path('profile/<int:id>', Profile_get_update, name = 'profile'),
+    path('profile/<int:id>/update/', Profile_get_update, name = 'profileUpdate')
 ]
