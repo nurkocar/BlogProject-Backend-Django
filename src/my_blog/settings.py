@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'nested_admin',
-    'rest_framework.authtoken',
+    # 'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework.authtoken',
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig'
 ]
@@ -116,6 +117,15 @@ AUTH_PASSWORD_VALIDATORS = [
 #     ]
 # }
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': [
+#         'django_filters.rest_framework.DjangoFilterBackend'
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ],
+# }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -138,3 +148,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media_root'
+
+# LOGIN_REDIRECT_URL = 'api/categoryList'
