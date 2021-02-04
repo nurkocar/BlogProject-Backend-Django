@@ -14,6 +14,7 @@ class Update(models.Model):
         abstract = True
 class Category(Update):
     name = models.CharField(max_length=100)
+    img = models.TextField()
     
     class Meta:
         verbose_name_plural = 'Categories'
