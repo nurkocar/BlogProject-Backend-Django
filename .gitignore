@@ -88,7 +88,6 @@ benv/
 venv/
 ENV/
 .vscode
-benv/
 # Spyder project settings
 .spyderproject
 .spyproject
