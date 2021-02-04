@@ -103,7 +103,7 @@ class LikeCreate(APIView):
             Like.objects.create(user = request.user, recipe = obj)
         
         data = {
-            'messages': 'like operations succesfull'
+            'messages': 'like/unlike operations are succesfull'
         }
         
         return Response(data)
