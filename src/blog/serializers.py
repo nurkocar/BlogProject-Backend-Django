@@ -8,7 +8,8 @@ class CategoryListSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
-            'recipe_count'
+            'recipe_count',
+            'img'
         )
     # def get_category(self, obj):
     #     return obj.get_category_display()
