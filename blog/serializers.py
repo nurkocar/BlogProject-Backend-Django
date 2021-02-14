@@ -64,7 +64,8 @@ class RecipeListSerializer(serializers.ModelSerializer):
             'count_like',
             'count_ingredient',
             'method',
-            'published_date',            
+            'published_date',
+            'info'           
         )
         
 class RecipeDetailSerializer(serializers.ModelSerializer):

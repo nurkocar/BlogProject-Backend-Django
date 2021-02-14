@@ -37,6 +37,7 @@ class Recipe(Update):
     category = models.ForeignKey(Category, on_delete = models.PROTECT, default=1)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     title = models.CharField(max_length=100)
+    info = models.TextField()
     method = models.TextField()
     published_date = models.DateTimeField(auto_now_add = True)
     image = models.ImageField(upload_to = user_directory_path, default = 'shef.png')
